@@ -1,0 +1,332 @@
+:root {
+    --panel: rgba(17, 24, 27, 0.93); /* Sutil transparencia para integrar el fondo */
+    --accent: #f43f5e;
+    --accent-hover: #fb7185;
+    --damage-color: #3b82f6;
+    --text: #f3f4f6;
+    --text-muted: #9ca3af;
+    --success: #10b981;
+    --gold: #f59e0b;
+}
+
+body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    color: var(--text);
+    margin: 0;
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    overflow-x: hidden;
+    
+    /* Carga de la imagen de fondo con filtro oscuro premium */
+    background: 
+        linear-gradient(rgba(11, 15, 25, 0.85), rgba(11, 15, 25, 0.85)), 
+        url('imagenes/fondo.jpg') no-repeat center center fixed;
+    background-size: cover;
+}
+.container {
+    max-width: 500px;
+    width: 100%;
+    position: relative;
+    z-index: 2;
+}
+
+.panel {
+    background-color: var(--panel);
+    border: 1px solid #1f2937;
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+}
+
+.panel-title {
+    font-size: 1.1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.counter-container {
+    background: #030712;
+    border: 1px solid #374151;
+    border-radius: 12px;
+    padding: 10px 15px;
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.counter-label {
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.counter-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-calc {
+    background: #1f2937;
+    color: white;
+    border: 1px solid #4b5563;
+    width: 36px;
+    height: 36px;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+}
+
+.btn-calc:active {
+    background: #374151;
+}
+
+/* Estilos para que el input sea estético y editable */
+.counter-value {
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 1.3rem;
+    font-weight: bold;
+    width: 45px;
+    text-align: center;
+    font-family: inherit;
+}
+
+.counter-value:focus {
+    outline: 1px solid var(--accent);
+    background: #111827;
+    border-radius: 4px;
+}
+
+/* Limpieza total y segura de flechas en inputs numéricos  */
+input[type=number] {
+    appearance: textfield;
+    -moz-appearance: textfield;
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.checkbox-label input {
+    accent-color: var(--accent);
+    width: 16px;
+    height: 16px;
+}
+
+.btn-roll {
+    width: 100%;
+    background: var(--accent);
+    color: white;
+    border: none;
+    padding: 14px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-radius: 12px;
+    cursor: pointer;
+    margin-top: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 15px rgba(244, 63, 94, 0.4);
+    transition: all 0.1s;
+}
+
+.btn-roll:active {
+    transform: scale(0.98);
+}
+
+.result-display {
+    background: #030712;
+    border-radius: 12px;
+    padding: 15px;
+    margin-top: 15px;
+    text-align: center;
+    display: none;
+    border-left: 4px solid var(--accent);
+}
+
+.result-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.dice-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+.die-box {
+    width: 45px;
+    height: 45px;
+    background: #1f2937;
+    border: 2px solid #4b5563;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--text);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
+}
+
+.die-rolling {
+    animation: spin 0.4s ease-in-out infinite alternate;
+}
+
+.die-success {
+    background: #064e3b;
+    border-color: var(--success);
+    color: var(--success);
+    text-shadow: 0 0 5px var(--success);
+}
+
+.die-gold {
+    background: #78350f;
+    border-color: var(--gold);
+    color: var(--gold);
+    text-shadow: 0 0 8px var(--gold);
+    box-shadow: 0 0 12px rgba(245, 158, 11, 0.4);
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg) scale(0.9); background: #374151; }
+    100% { transform: rotate(360deg) scale(1.1); background: #111827; }
+}
+
+
+/* ========================
+   ANIMACIONES DE EFECTOS DE DAÑO
+   (Tajos y chorreo de sangre)
+
+/* =======================*/
+
+.slash {
+    position: fixed;
+    top: 45%;
+    left: 5%;
+    width: 90vw;
+    height: 0px;
+    background: #500505; /* Fondo oscuro de la herida profunda */
+    border-top: 3px solid #b91c1c; /* Labio superior */
+    border-bottom: 4px solid #7f1d1d; /* Labio inferior */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.8), 0 0 25px #ff0022;
+    transform: rotate(-12deg);
+    z-index: 999;
+    pointer-events: none;
+    display: none;
+    border-radius: 45% 55% 50% 50% / 40% 40% 60% 60%;
+}
+
+/* Las gotas de sangre líquida reales que cuelgan del tajo */
+.drop {
+    position: absolute;
+    background: linear-gradient(to bottom, #7f1d1d, #b91c1c);
+    width: 8px;
+    height: 0px;
+    border-radius: 0 0 5px 5px;
+    opacity: 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+}
+
+.drop1 { left: 25%; width: 6px; }
+.drop2 { left: 50%; width: 9px; } 
+.drop3 { left: 75%; width: 7px; }
+
+/* Disparador de animaciones */
+.animate-slash {
+    display: block;
+    /* La herida principal ahora controla su propia desaparición en 1.2 segundos */
+    animation: abrirYCerrarCorte 1.2s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+}
+
+.animate-slash .drop {
+    /* El chorreo se comprime a 1 segundo clavado para ir en sincronía */
+    animation: chorreoLiquidoVeloz 1.0s ease-in forwards;
+}
+
+/* ANIMACIÓN 1: El tajo se abre al instante, se sostiene y se desvanece rápido */
+@keyframes abrirYCerrarCorte {
+    0% { 
+        height: 0px; 
+        opacity: 0; 
+        transform: rotate(-12deg) scaleX(0.1); 
+    }
+    10% { 
+        height: 18px; 
+        opacity: 1; 
+        transform: rotate(-12deg) scaleX(1); 
+    }
+    75% {
+        height: 14px;
+        opacity: 1;
+    }
+    100% { 
+        height: 0px;
+        opacity: 0;
+        transform: rotate(-12deg) scaleX(0.8);
+    }
+}
+
+/* ANIMACIÓN 2: Las gotas se estiran y caen al vacío en 1 segundo */
+@keyframes chorreoLiquidoVeloz {
+    0% {
+        height: 0px;
+        opacity: 0;
+    }
+    15% {
+        opacity: 1;
+        height: 50px;
+    }
+    50% {
+        height: 160px;
+        opacity: 1;
+    }
+    90% {
+        height: 320px;
+        opacity: 0.3;
+    }
+    100% {
+        height: 380px;
+        opacity: 0;
+    }
+}
+
+/* Animación del Salpicón de Fondo (Dura 1.2 segundos y se limpia solo) */
+.animate-blood {
+    display: block;
+    animation: bloodFadeVeloz 1.2s ease-out forwards;
+}
+
+@keyframes bloodFadeVeloz {
+    0% { opacity: 0; transform: scale(0.75); filter: blur(2px); }
+    15% { opacity: 1; transform: scale(1); filter: blur(0px); }
+    50% { opacity: 1; }
+    100% { opacity: 0; filter: blur(6px); }
+}

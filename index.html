@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exalted 2E Dm Herramienta</title>
+    <link rel="icon" type="image/jpg" href="imagenes/logo.jpg">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>w
+
+<!-- Contenedores ocultos para la animación especial de daño masivo -->
+<div id="slash-effect" class="slash">
+    <div class="drop drop1"></div>
+    <div class="drop drop2"></div>
+    <div class="drop drop3"></div>
+</div>
+<div id="blood-effect" class="blood-splatter"></div>
+
+<div class="container">
+    <h1>Exalted 2E Master</h1>
+    <div class="author">EL BESTO FRIENDO</div>
+
+    <!-- ===================================================== -->
+    <!-- FASE DE ATAQUE -->
+    <!-- ===================================================== -->
+    <div class="panel">
+        <div class="panel-title" style="color: var(--accent);">⚔️ Fase de Ataque</div>
+        
+        <div class="counter-container">
+            <span class="counter-label">Atributo (Destreza, etc)</span>
+            <div class="counter-controls">
+                <div class="btn-calc" onclick="changeVal('attr', -1)">-</div>
+                <input type="number" class="counter-value" id="val-attr" value="4" onchange="updateState('attr', this.value)">
+                <div class="btn-calc" onclick="changeVal('attr', 1)">+</div>
+            </div>
+        </div>
+
+        <div class="counter-container">
+            <span class="counter-label">Habilidad (Cuerpo a Cuerpo, etc)</span>
+            <div class="counter-controls">
+                <div class="btn-calc" onclick="changeVal('hab', -1)">-</div>
+                <input type="number" class="counter-value" id="val-hab" value="3" onchange="updateState('hab', this.value)">
+                <div class="btn-calc" onclick="changeVal('hab', 1)">+</div>
+            </div>
+        </div>
+
+        <div class="counter-container">
+            <span class="counter-label">Extras (Precisión, Especialidades)</span>
+            <div class="counter-controls">
+                <div class="btn-calc" onclick="changeVal('ext', -1)">-</div>
+                <input type="number" class="counter-value" id="val-ext" value="2" onchange="updateState('ext', this.value)">
+                <div class="btn-calc" onclick="changeVal('ext', 1)">+</div>
+            </div>
+        </div>
+
+        <!-- Encantamientos en Ataque -->
+        <div class="counter-container">
+            <span class="counter-label" style="color: #c084fc;">Encantamientos (Charms Ataque)</span>
+            <div class="counter-controls">
+                <div class="btn-calc" onclick="changeVal('charm_atk', -1)">-</div>
+                <input type="number" class="counter-value" id="val-charm_atk" value="0" onchange="updateState('charm_atk', this.value)">
+                <div class="btn-calc" onclick="changeVal('charm_atk', 1)">+</div>
+            </div>
+        </div>
+
+        <div class="counter-container" style="border-color: var(--accent);">
+            <span class="counter-label" style="color: var(--accent);">Valor Defensivo (VD Rival)</span>
+            <div class="counter-controls">
+                <div class="btn-calc" onclick="changeVal('vd', -1)">-</div>
+                <input type="number" class="counter-value" id="val-vd" value="3" onchange="updateState('vd', this.value)">
+                <div class="btn-calc" onclick="changeVal('vd', 1)">+</div>
+            </div>
+        </div>
+
+        <label class="checkbox-label">
+            <input type="checkbox" id="double-attack" checked>
+            <span>Contar los 10 como Doble Éxito</span>
+        </label>
+
+        <!-- MODIFICADO: Nuevos multiplicadores de Ataque -->
+        <label class="checkbox-label">
+            <input type="checkbox" id="mult-pre-vd">
+            <span style="color: #fda4af;">x2 Éxitos (Pre-Defensa)</span>
+        </label>
+        <label class="checkbox-label">
+            <input type="checkbox" id="mult-post-vd">
+            <span style="color: #f43f5e;">x2 Éxitos (Post-Defensa / Netos)</span>
+        </label>
+
+        <button class="btn-roll" onclick="tirarAtaque()">Lanzar Ataque</button>
+
+        <div class="result-display" id="res-ataque"></div>
+        <div class="dice-grid" id="grid-ataque"></div>
+    </div>
+
+    <!-- ===================================================== -->
+    <!-- FASE DE DAÑO -->
+    <!-- ===================================================== -->
+    <div class="panel" id="panel-daño" style="opacity: 0.4; pointer-events: none; transition: all 0.3s;">
+        <div class="panel-title" style="color: var(--damage-color);">🩸 Fase de Daño</div>
+
+        <div class="counter-container">
+            <span class="counter-label">Daño Base (Arma + Fuerza)</span>
+            <div class="counter-controls">
+                <div class="btn-calc" onclick="changeVal('dmg', -1)">-</div>
+                <input type="number" class="counter-value" id="val-dmg" value="5" onchange="updateState('dmg', this.value)">
+                <div class="btn-calc" onclick="changeVal('dmg', 1)">+</div>
+            </div>
+        </div>
+
+        <div class="counter-container">
+            <span class="counter-label">Éxitos de Traslación (Netos)</span>
+            <div class="counter-controls">
+                <input type="number" class="counter-value" id="val-netos" value="0" style="color: var(--success);" readonly>
+            </div>
+        </div>
+
+        <!-- Encantamientos en Daño -->
+        <div class="counter-container">
+            <span class="counter-label" style="color: #c084fc;">Encantamientos (Charms Daño)</span>
+            <div class="counter-controls">
+                <div class="btn-calc" onclick="changeVal('charm_dmg', -1)">-</div>
+                <input type="number" class="counter-value" id="val-charm_dmg" value="0" onchange="updateState('charm_dmg', this.value)">
+                <div class="btn-calc" onclick="changeVal('charm_dmg', 1)">+</div>
+            </div>
+        </div>
+
+        <div class="counter-container" style="border-color: var(--damage-color);">
+            <span class="counter-label" style="color: var(--damage-color);">Absorción Enemiga (Soak)</span>
+            <div class="counter-controls">
+                <div class="btn-calc" onclick="changeVal('soak', -1)">-</div>
+                <input type="number" class="counter-value" id="val-soak" value="2" onchange="updateState('soak', this.value)">
+                <div class="btn-calc" onclick="changeVal('soak', 1)">+</div>
+            </div>
+        </div>
+
+        <label class="checkbox-label">
+            <input type="checkbox" id="double-damage">
+            <span>Contar los 10 como Doble Éxito</span>
+        </label>
+
+        <!-- MODIFICADO: Nuevos multiplicadores de Daño -->
+        <label class="checkbox-label">
+            <input type="checkbox" id="mult-pre-soak">
+            <span style="color: #93c5fd;">x2 Dados de Daño (Pre-Absorción)</span>
+        </label>
+        <label class="checkbox-label">
+            <input type="checkbox" id="mult-post-soak">
+            <span style="color: #3b82f6;">x2 Dados de Daño (Post-Absorción)</span>
+        </label>
+
+        <button class="btn-roll" style="background: var(--damage-color); box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);" onclick="tirarDaño()">Lanzar Daño</button>
+
+        <div class="result-display" id="res-daño" style="border-left-color: var(--damage-color);"></div>
+        <div class="dice-grid" id="grid-daño"></div>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
