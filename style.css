@@ -18,7 +18,7 @@ body {
     justify-content: center;
     overflow-x: hidden;
     
-    /* Carga de la imagen de fondo con filtro oscuro premium */
+    /* CORREGIDO: Ruta con la 'I' mayúscula oficial para servidores de producción */
     background: 
         linear-gradient(rgba(11, 15, 25, 0.85), rgba(11, 15, 25, 0.85)), 
         url('Imagenes/fondo.jpg') no-repeat center center fixed;
