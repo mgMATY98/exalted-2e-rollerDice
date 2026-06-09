@@ -17,10 +17,10 @@ body {
     display: flex;
     justify-content: center;
     overflow-x: hidden;
-    
+
     background: 
         linear-gradient(rgba(11, 15, 25, 0.85), rgba(11, 15, 25, 0.85)), 
-        url('Imagenes/fondo.jpg') no-repeat center center fixed;
+        url('/exalted-2e-rollerDice/Imagenes/fondo.jpg') no-repeat center center fixed;
     background-size: cover;
 }
 .container {
