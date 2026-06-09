@@ -21,7 +21,7 @@ body {
     /* Carga de la imagen de fondo con filtro oscuro premium */
     background: 
         linear-gradient(rgba(11, 15, 25, 0.85), rgba(11, 15, 25, 0.85)), 
-        url('imagenes/fondo.jpg') no-repeat center center fixed;
+        url('Imagenes/fondo.jpg') no-repeat center center fixed;
     background-size: cover;
 }
 .container {
